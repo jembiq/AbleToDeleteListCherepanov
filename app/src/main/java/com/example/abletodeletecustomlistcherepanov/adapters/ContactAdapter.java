@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.abletodeletecustomlistcherepanov.R;
 import com.example.abletodeletecustomlistcherepanov.model.Contact;
@@ -18,9 +18,11 @@ import java.util.List;
 public class ContactAdapter extends BaseAdapter {
     private List<Contact> contacts;
     private LayoutInflater inflater;
+    private Context context;
 
     public ContactAdapter(List<Contact> contacts, Context context) {
         this.contacts = contacts;
+        this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
@@ -40,7 +42,7 @@ public class ContactAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final View currentView;
         if(convertView != null) {
             currentView = convertView;
@@ -59,6 +61,27 @@ public class ContactAdapter extends BaseAdapter {
             imageView.setBackgroundResource(R.drawable.icons8_customer64);
             contactName.setText(contact.getContactName());
             contactNumber.setText(contact.getContactNumber());
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    contacts.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
+
+            currentView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    Toast.makeText(context
+                            , (position+1) + " position"
+                            , Toast.LENGTH_SHORT)
+                            .show();
+
+                    return true;
+                }
+            });
         }
 
         return currentView;

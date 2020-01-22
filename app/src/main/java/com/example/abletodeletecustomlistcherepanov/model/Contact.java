@@ -4,7 +4,7 @@ public class Contact implements Comparable<Contact> {
     private String contactName;
     private String contactNumber;
 
-    public Contact(String contactName, String contactNumber, boolean checked) {
+    public Contact(String contactName, String contactNumber) {
         this.contactName = contactName;
         this.contactNumber = contactNumber;
     }
